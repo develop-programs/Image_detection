@@ -1,0 +1,90 @@
+{
+    "types": [
+        {
+            "name": "Monthly",
+            "value": "monthly"
+        },
+        {
+            "name": "Yearly",
+            "value": "yearly"
+        }
+    ],
+    "plans": {
+        "monthly": [
+            {
+                "name": "Free",
+                "price": 0,
+                "features": [
+                    "1 User per account allowed",
+                    "100MB Storage Space",
+                    "50 Credits per month"
+                ]
+            },
+            {
+                "name": "Basic",
+                "price": 19.99,
+                "features": [
+                    "1 User per account allowed",
+                    "500MB Storage Space",
+                    "200 Credits per month"
+                ]
+            },
+            {
+                "name": "Pro",
+                "price": 39.99,
+                "features": [
+                    "5 Users per account allowed",
+                    "2GB Storage Space",
+                    "500 Credits per month"
+                ]
+            },
+            {
+                "name": "Enterprise",
+                "price": 59.99,
+                "features": [
+                    "10 Users per account allowed",
+                    "5GB Storage Space",
+                    "1000 Credits per month"
+                ]
+            }
+        ],
+        "yearly": [
+            {
+                "name": "Free",
+                "price": 0,
+                "features": [
+                    "1 User per account allowed",
+                    "100MB Storage Space",
+                    "50 Credits per month"
+                ]
+            },
+            {
+                "name": "Basic",
+                "price": 199.99,
+                "features": [
+                    "1 User per account allowed",
+                    "500MB Storage Space",
+                    "1200 Credits per year"
+                ]
+            },
+            {
+                "name": "Pro",
+                "price": 399.99,
+                "features": [
+                    "5 Users per account allowed",
+                    "2GB Storage Space",
+                    "6000 Credits per year"
+                ]
+            },
+            {
+                "name": "Enterprise",
+                "price": 599.99,
+                "features": [
+                    "10 Users per account allowed",
+                    "5GB Storage Space",
+                    "12000 Credits per year"
+                ]
+            }
+        ]
+    }
+}
