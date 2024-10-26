@@ -1,3 +1,6 @@
+import { User } from "@/[Database]/models/users.model";
+import { connectToDatabase } from "@/[Database]/connectTodatabase";
+import CryptoJS from "crypto-js";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
@@ -13,12 +16,22 @@ export const options: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", username: "admin", password: "admin" };
-        if (
-          credentials?.username === user.username &&
-          credentials?.password === user.password
-        ) {
-          return user;
+        await connectToDatabase().catch((error) => {
+          return { error: (error as Error).message };
+        });
+        const user = await User.findOne({ email: credentials?.username });
+        if (!user) {
+          return null;
+        }
+        if (user) {
+          const bytes = CryptoJS.AES.decrypt(
+            user.password,
+            process.env.SECRET as string
+          );
+          const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+          if (originalPassword === credentials?.password) {
+            return user;
+          }
         }
         return null;
       },
