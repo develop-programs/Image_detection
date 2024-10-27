@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { signIn } from "next-auth/react"
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -33,10 +34,21 @@ export default function LoginForm() {
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        await signIn("credentials", {
+            email: values.email,
+            password: values.password,
+            redirect: true,
+        }).then((response) => {
+            if (response && response.error) {
+                alert(response.error)
+            } else {
+                alert("Success")
+            }
+        })
+
     }
     return (
         <Card>

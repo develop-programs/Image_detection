@@ -1,7 +1,7 @@
 import { User } from "@/[Database]/models/users.model";
 import { connectToDatabase } from "@/[Database]/connectTodatabase";
 import CryptoJS from "crypto-js";
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, token } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
@@ -11,7 +11,7 @@ export const options: NextAuthOptions = {
     Credentials({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
@@ -19,19 +19,14 @@ export const options: NextAuthOptions = {
         await connectToDatabase().catch((error) => {
           return { error: (error as Error).message };
         });
-        const user = await User.findOne({ email: credentials?.username });
-        if (!user) {
-          return null;
-        }
+        const user = await User.findOne({ email: credentials?.email });
         if (user) {
           const bytes = CryptoJS.AES.decrypt(
             user.password,
-            process.env.SECRET as string
+            process.env.SECRET_KEY as string
           );
           const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-          if (originalPassword === credentials?.password) {
-            return user;
-          }
+          if (originalPassword === credentials?.password) return user;
         }
         return null;
       },
@@ -45,35 +40,28 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
   ],
-  secret: process.env.SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/auth/signin",
-    newUser: "/auth/newuser",
-    error: "/auth/error",
+    signIn: "/api/auth/signIn",
+    newUser: "/api/auth/signUp",
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      const isAllowedToSignIn = true;
-      if (isAllowedToSignIn) {
-        return true;
-      } else {
-        return false;
-      }
-    },
     async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
     },
     async session({ session, token }) {
+      // Add property to session, like an access_token from a provider.
+      session.user.accessToken = token.accessToken as string;
       return session;
     },
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
-        token.accessToken = account.access_token;
+        console.log(account);
+        token.accessToken = account.accessToken as string;
+      }
+      if (profile) {
+        console.log(profile);
       }
       return token;
     },
