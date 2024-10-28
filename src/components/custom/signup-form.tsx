@@ -13,12 +13,15 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
 
 const formSchema = z.object({
+    name: z.string().min(3, {}),
     email: z.string().email(),
-    password: z.string().min(8, {
-        message: "Password must be at least 8 characters.",
+    password: z.object({
+        password: z.string().min(8, {}),
+        confirmPassword: z.string().min(8, {}),
+    }).refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords do not match",
     }),
 })
 
@@ -28,7 +31,10 @@ export default function SignupForm() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
-            password: "",
+            password: {
+                password: "",
+                confirmPassword: "",
+            },
         },
     })
 
@@ -62,7 +68,20 @@ export default function SignupForm() {
                         />
                         <FormField
                             control={form.control}
-                            name="password"
+                            name="password.password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="*******" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="password.confirmPassword"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>

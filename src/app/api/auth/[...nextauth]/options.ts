@@ -1,7 +1,7 @@
 import { User } from "@/[Database]/models/users.model";
 import { connectToDatabase } from "@/[Database]/connectTodatabase";
 import CryptoJS from "crypto-js";
-import { NextAuthOptions, token } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
@@ -26,7 +26,9 @@ export const options: NextAuthOptions = {
             process.env.SECRET_KEY as string
           );
           const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-          if (originalPassword === credentials?.password) return user;
+          if (originalPassword === credentials?.password) {
+            return { id: user.id, name: user.name, email: user.email };
+          }
         }
         return null;
       },
@@ -47,21 +49,25 @@ export const options: NextAuthOptions = {
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
     },
-    async session({ session, token }) {
-      // Add property to session, like an access_token from a provider.
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
       session.user.accessToken = token.accessToken as string;
+      session.user.id = token.id as string;
+
       return session;
     },
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         console.log(account);
-        token.accessToken = account.accessToken as string;
-      }
-      if (profile) {
-        console.log(profile);
+        token.accessToken = account.access_token;
+        token.id = account.id;
       }
       return token;
     },
