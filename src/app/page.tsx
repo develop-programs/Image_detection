@@ -1,7 +1,8 @@
 
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
-import User from "@/components/custom/auth/User";
+import SignOutButton from "@/components/custom/auth/signOut-btn";
+import SignInButton from "@/components/custom/auth/signIn-btn";
 
 export default async function page() {
   const session = await getServerSession(options)
@@ -16,7 +17,16 @@ export default async function page() {
             </code>
           </pre> : null
       }
-      <User />
+      {
+        !session ?
+          <SignInButton>
+            Sign In
+          </SignInButton>
+          :
+          <SignOutButton>
+            Sign out
+          </SignOutButton>
+      }
     </div>
   )
 }
