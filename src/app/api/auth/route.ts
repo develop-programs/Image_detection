@@ -1,19 +1,14 @@
 import { NextResponse, NextRequest } from "next/server";
-import { User } from "@/[Database]/models/users.model";
-import { connectToDatabase } from "@/[Database]/connectTodatabase";
-import CryptoJS from "crypto-js";
+import { hashPassword } from "@/function/encryption";
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 export async function GET() {
-  await connectToDatabase().catch((error) => {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  });
   try {
-    const users = await User.find();
+    const users = await prisma.users.findMany();
     return await NextResponse.json(
-      { message: "Users found", users },
+      { message: "Users found", data: users },
       { status: 200 }
     );
   } catch (error) {
@@ -22,33 +17,26 @@ export async function GET() {
 }
 
 export async function POST(Request: NextRequest) {
-  await connectToDatabase().catch((error) => {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  });
   const body = await Request.json();
   try {
-    const Encrypted_Passowrd = CryptoJS.AES.encrypt(
-      body.password,
-      process.env.SECRET_KEY as string
-    ).toString();
-    const userExists = await User.findOne({ email: body.email });
+    const Encrypted_Passowrd = hashPassword(body.password);
+    const userExists = await prisma.users.findUnique({ where: { email: body.email } });
     if (userExists) {
       return await NextResponse.json(
         { message: "User already exists" },
         { status: 400 }
       );
     }
-    const user = await User.create({
-      name: body.name,
-      email: body.email,
-      password: Encrypted_Passowrd,
-      image: body.image,
+    const user = await prisma.users.create({
+      data: {
+        name: body.name,
+        email: body.email,
+        password: Encrypted_Passowrd.toString(),
+        image: body.image ? body.image : `https://ui-avatars.com/api/?name=${body.name}&background=random&color=fff&size=128`,
+      },
     });
     return await NextResponse.json(
-      { message: "User created", user },
+      { message: "User created", data: user },
       { status: 201 }
     );
   } catch (error) {
@@ -57,23 +45,26 @@ export async function POST(Request: NextRequest) {
 }
 
 export async function DELETE(Request: NextRequest) {
-  await connectToDatabase().catch((error) => {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  });
-  const email = Request.nextUrl.searchParams.get("email");
+  const email = Request.nextUrl.searchParams.get("email")?.toString();
   try {
-    const iformation = await User.findOneAndDelete({ email: email });
-    if (!iformation) {
+    const isUserFind = await prisma.users.findUnique({
+      where: {
+        email: email
+      },
+    })
+    if (!isUserFind) {
       return await NextResponse.json(
         { message: "User not found" },
         { status: 404 }
       );
     }
+    const response = await prisma.users.delete({
+      where: {
+        email: email
+      },
+    });
     return await NextResponse.json(
-      { message: "User deleted", iformation },
+      { message: "User deleted", data: response },
       { status: 200 }
     );
   } catch (error) {

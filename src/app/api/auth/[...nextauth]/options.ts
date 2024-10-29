@@ -1,10 +1,11 @@
-import { User } from "@/[Database]/models/users.model";
-import { connectToDatabase } from "@/[Database]/connectTodatabase";
-import CryptoJS from "crypto-js";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import { verifyPassword } from "@/function/encryption";
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 export const options: NextAuthOptions = {
   providers: [
@@ -16,18 +17,15 @@ export const options: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        await connectToDatabase().catch((error) => {
-          return { error: (error as Error).message };
+        const user = await prisma.users.findUnique({
+          where: {
+            email: credentials?.email,
+          },
         });
-        const user = await User.findOne({ email: credentials?.email });
         if (user) {
-          const bytes = CryptoJS.AES.decrypt(
-            user.password,
-            process.env.SECRET_KEY as string
-          );
-          const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-          if (originalPassword === credentials?.password) {
-            return { id: user.id, name: user.name, email: user.email };
+          const isVerified = verifyPassword(credentials?.password, user.password);
+          if (isVerified) {
+            return user
           }
         }
         return null;
@@ -42,6 +40,9 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
   ],
+  jwt: {
+    maxAge: 60 * 24 * 60 * 60, // 30 days
+  },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/api/auth/signIn",

@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
+import { toast } from "sonner"
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -40,12 +41,13 @@ export default function LoginForm() {
         await signIn("credentials", {
             email: values.email,
             password: values.password,
+            callbackUrl: "http://localhost:3000",
             redirect: true,
         }).then((response) => {
             if (response && response.error) {
-                alert(response.error)
+                toast.error(response.error)
             } else {
-                alert("Success")
+                toast.success("Login successful")
             }
         })
 
