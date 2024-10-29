@@ -15,7 +15,7 @@ export const options: NextAuthOptions = {
         email: { label: "email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
         const user = await prisma.users.findUnique({
           where: {
@@ -56,14 +56,14 @@ export const options: NextAuthOptions = {
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       // Send properties to the client, like an access_token and user id from a provider.
       session.user.accessToken = token.accessToken as string;
       session.user.id = token.id as string;
 
       return session;
     },
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         console.log(account);

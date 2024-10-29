@@ -1,4 +1,3 @@
-
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
 import SignOutButton from "@/components/custom/auth/signOut-btn";
