@@ -4,18 +4,18 @@ import { options } from '@/app/api/auth/[...nextauth]/options'
 import SignInButton from './signIn-btn'
 import SignOutButton from './signOut-btn'
 
-export default async function User() {
+async function FetchSession() {
     const session = await getServerSession(options)
-    if (session) {
-        return (
-            <SignOutButton>
-                Sign Out
-            </SignOutButton>
-        )
-    }
+    return session
+}
+
+export default async function User() {
+    const session = await FetchSession()
     return (
-        <SignInButton>
-            Sign In
-        </SignInButton>
+        <div>
+            {
+                session ? <SignOutButton>SignOut</SignOutButton> : <SignInButton>Sign In</SignInButton>
+            }
+        </div>
     )
 }
