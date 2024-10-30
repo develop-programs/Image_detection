@@ -1,10 +1,9 @@
+// next-auth.d.ts
+
 import NextAuth, { DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
-  /**
-   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
   interface Session {
     user: {
       accessToken: string;
@@ -15,6 +14,9 @@ declare module "next-auth" {
       isEmailVerified: boolean;
       credits: number;
       isSubscribed: boolean;
+      plan: string;
+      createdAt: Date;
+      updatedAt: Date;
     } & DefaultSession["user"];
   }
   interface User {
@@ -25,19 +27,24 @@ declare module "next-auth" {
     isEmailVerified: boolean;
     credits: number;
     isSubscribed: boolean;
+    plan: string;
+    createdAt: Date;
+    updatedAt: Date;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
-    user: {
-      accessToken: string;
-      name: string;
-      email: string;
-      image?: string;
-      isEmailVerified: boolean;
-      credits: number;
-      isSubscribed: boolean;
-    }
+    accessToken: string;
+    id: string;
+    name: string;
+    email: string;
+    image?: string;
+    isEmailVerified: boolean;
+    credits: number;
+    isSubscribed: boolean;
+    plan: string;
+    createdAt: Date;
+    updatedAt: Date;
   }
 }

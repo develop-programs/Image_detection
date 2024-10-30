@@ -17,7 +17,7 @@ export default function PricingCards() {
             index: 1
         });
     return (
-        <Tabs defaultValue='monthly' className='mt-12 space-y-24'>
+        <Tabs defaultValue='monthly' className='mt-6 space-y-16'>
             <div className='w-full flex justify-center'>
                 <TabsList className='p-3 rounded-full'>
                     {

@@ -32,7 +32,10 @@ export const options: NextAuthOptions = {
               image: user.image as string,
               isEmailVerified: user.isEmailVerified,
               isSubscribed: user.isSubscribed,
-              credits: user.credits
+              credits: user.credits,
+              plan: user.plan,
+              createdAt: user.createdAt,
+              updatedAt: user.updatedAt
             }
           }
         }
@@ -58,21 +61,37 @@ export const options: NextAuthOptions = {
   },
   callbacks: {
     async redirect({ url }) {
-      return url
+      return url;
     },
     async session({ session, token }) {
-      // Send properties to the client, like an access_token and user id from a provider.
       session.user.accessToken = token.accessToken as string;
       session.user.id = token.id as string;
+      session.user.name = token.name as string;
+      session.user.email = token.email as string;
+      session.user.image = token.image as string;
+      session.user.isEmailVerified = token.isEmailVerified as boolean;
+      session.user.credits = token.credits as number;
+      session.user.isSubscribed = token.isSubscribed as boolean;
+      session.user.plan = token.plan as string;
+      session.user.createdAt = token.createdAt as Date;
+      session.user.updatedAt = token.updatedAt as Date;
       return session;
     },
     async jwt({ account, user, token }) {
-      // Persist the OAuth access_token and or the user id to the token right after signin\
       if (account) {
         token.accessToken = account.accessToken as string;
       }
       if (user) {
         token.id = user.id as string;
+        token.name = user.name as string;
+        token.email = user.email as string;
+        token.image = user.image as string;
+        token.isEmailVerified = user.isEmailVerified as boolean;
+        token.credits = user.credits as number;
+        token.isSubscribed = user.isSubscribed as boolean;
+        token.plan = user.plan as string;
+        token.createdAt = user.createdAt as Date;
+        token.updatedAt = user.updatedAt as Date;
       }
       return token;
     },

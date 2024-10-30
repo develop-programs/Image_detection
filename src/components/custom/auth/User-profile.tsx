@@ -66,6 +66,13 @@ export default async function UserProfile() {
                                                 Manage your account info.
                                             </DialogDescription>
                                         </DialogHeader>
+                                        <div className='w-full'>
+                                            <code>
+                                                <pre className='max-w-80'>
+                                                    {JSON.stringify(session.user, null, 2)}
+                                                </pre>
+                                            </code>
+                                        </div>
                                     </DialogContent>
                                 </Dialog>
                                 <SignOutButton>Sign Out</SignOutButton>
