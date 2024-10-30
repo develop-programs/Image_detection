@@ -14,13 +14,22 @@ datasource db {
 }
 
 model Users {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  email        String   @unique @db.String
-  name         String?  @db.String
-  password     String   @db.String
-  image        String?  @db.String
-  isSubscribed Boolean  @default(false) @db.Bool
-  credits      Int      @default(200) @db.Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  email           String   @unique @db.String
+  name            String?  @db.String
+  password        String   @db.String
+  image           String?  @db.String
+  isEmailVerified Boolean  @default(false) @db.Bool
+  isSubscribed    Boolean  @default(false) @db.Bool
+  credits         Int      @default(200) @db.Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model blog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String   @db.String
+  content   String   @db.String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

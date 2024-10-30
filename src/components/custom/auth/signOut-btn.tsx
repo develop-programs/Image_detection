@@ -7,7 +7,7 @@ export default function SignOutButton(
     { children }: { children: React.ReactNode }
 ) {
     return (
-        <Button onClick={() => signOut()} variant="outline" size={'default'}>
+        <Button onClick={() => signOut()} variant="ghost" className='w-full inline-flex justify-start'>
             {children}
         </Button>
     )

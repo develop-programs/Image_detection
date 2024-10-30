@@ -25,7 +25,15 @@ export const options: NextAuthOptions = {
         if (user) {
           const isVerified = verifyPassword(credentials?.password, user.password);
           if (isVerified) {
-            return user
+            return {
+              id: user.id as string,
+              name: user.name as string,
+              email: user.email as string,
+              image: user.image as string,
+              isEmailVerified: user.isEmailVerified,
+              isSubscribed: user.isSubscribed,
+              credits: user.credits
+            }
           }
         }
         return null;
@@ -41,7 +49,7 @@ export const options: NextAuthOptions = {
     }),
   ],
   jwt: {
-    maxAge: 60 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
@@ -49,28 +57,24 @@ export const options: NextAuthOptions = {
     newUser: "/api/auth/signUp",
   },
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
+    async redirect({ url }) {
+      return url
     },
     async session({ session, token }) {
       // Send properties to the client, like an access_token and user id from a provider.
       session.user.accessToken = token.accessToken as string;
       session.user.id = token.id as string;
-
       return session;
     },
-    async jwt({ token, account }) {
-      // Persist the OAuth access_token and or the user id to the token right after signin
+    async jwt({ account, user, token }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin\
       if (account) {
-        console.log(account);
-        token.accessToken = account.access_token;
-        token.id = account.id;
+        token.accessToken = account.accessToken as string;
+      }
+      if (user) {
+        token.id = user.id as string;
       }
       return token;
     },
-  },
-};
+  }
+}

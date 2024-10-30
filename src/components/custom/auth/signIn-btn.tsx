@@ -7,7 +7,7 @@ export default function SignInButton(
     { children }: { children: React.ReactNode }
 ) {
     return (
-        <Button onClick={() => signIn()} variant="outline" size={'default'}>
+        <Button onClick={() => signIn()} variant="default" size="default">
             {children}
         </Button>
     )
