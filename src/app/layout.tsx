@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import SessionProviderClient from "@/providers/SessionProvider";
+import ReduxSessionProvider from "@/providers/ReduxSessionProvider";
+import UserSession from "@/function/userSession";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,8 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <SessionProviderClient>
+          <ReduxSessionProvider>
+            {children}
+            <UserSession />
+          </ReduxSessionProvider>
+        </SessionProviderClient>
         <Toaster richColors position="top-right" />
+
       </body>
     </html>
   );

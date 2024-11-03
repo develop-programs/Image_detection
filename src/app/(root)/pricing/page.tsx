@@ -3,6 +3,7 @@ import React from 'react'
 
 import Back from '@/components/custom/Back'
 import PricingCards from '@/components/custom/PricingCards'
+import TopUp from '@/components/custom/TopUp'
 
 
 export default function page() {
@@ -13,6 +14,7 @@ export default function page() {
                 <span className='font-medium text-lg'>Choose a plan that works for you</span>
             </div>
             <PricingCards />
+            <TopUp />
         </div>
     )
 }

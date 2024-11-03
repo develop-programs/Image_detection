@@ -9,6 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
+import UserData from './user-data';
 
 
 export default async function UserProfile() {
@@ -60,18 +61,8 @@ export default async function UserProfile() {
                                     </DialogTrigger>
                                     <Separator className="my-2" />
                                     <DialogContent className="max-w-[50rem] h-[40rem] flex flex-wrap">
-                                        <DialogHeader>
-                                            <DialogTitle>Account</DialogTitle>
-                                            <DialogDescription>
-                                                Manage your account info.
-                                            </DialogDescription>
-                                        </DialogHeader>
                                         <div className='w-full'>
-                                            <code>
-                                                <pre className='max-w-80'>
-                                                    {JSON.stringify(session.user, null, 2)}
-                                                </pre>
-                                            </code>
+                                            <UserData />
                                         </div>
                                     </DialogContent>
                                 </Dialog>
