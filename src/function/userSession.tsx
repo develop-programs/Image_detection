@@ -13,6 +13,7 @@ export default function UserSession() {
             name: session.user.name,
             email: session.user.email,
             isEmailVerified: session.user.isEmailVerified,
+            image: session.user.image || '',
             credits: session.user.credits,
             isSubscribed: session.user.isSubscribed,
             plan: session.user.plan,

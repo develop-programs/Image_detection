@@ -1,11 +1,14 @@
 "use client";
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 export default function UserData() {
+    const user = useSelector((state: any) => state.User);
     return (
         <Tabs className='flex h-full' defaultValue='profile'>
-            <div className='flex flex-col w-56 gap-4'>
+            <div className='flex flex-col w-56 gap-4 border-r-2 px-2'>
                 <div className='grid gap-2'>
                     <span className='text-2xl font-semibold'>Account</span>
                     <p>Manage your account Info</p>
@@ -27,8 +30,19 @@ export default function UserData() {
                     </TabsTrigger>
                 </TabsList>
             </div>
-            <TabsContent value='profile'>
-                Profile
+            <TabsContent value='profile' className='w-full'>
+                <div className='px-4'>
+                    <span className='text-lg font-semibold'>Profile details</span>
+                </div>
+                <div className='px-4 flex justify-between items-center'>
+                    <span className='text-base font-bold'>Profile</span>
+                    <Avatar>
+                        <AvatarImage src={user.image} />
+                    </Avatar>
+                </div>
+                <div></div>
+                <div></div>
+                <div></div>
             </TabsContent>
             <TabsContent value='manage'>
                 Manage

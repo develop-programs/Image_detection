@@ -20,6 +20,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Photoprocess",
   description: "A simple photo processing app that can do some cool stuff.",
+  icons: {
+    icon: "./icon.svg"
+  }
 };
 
 export default function RootLayout({

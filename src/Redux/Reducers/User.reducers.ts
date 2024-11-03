@@ -7,7 +7,7 @@ interface UserData {
     id: string;
     name: string;
     email: string;
-    image?: string;
+    image: string;
     isEmailVerified: boolean;
     credits: number;
     isSubscribed: boolean;
@@ -22,6 +22,7 @@ const initialState: UserData = {
     name: "",
     email: "",
     isEmailVerified: false,
+    image: "",
     credits: 0,
     isSubscribed: false,
     plan: "",
@@ -39,6 +40,7 @@ export const counterSlice = createSlice({
             state.name = action.payload.name
             state.email = action.payload.email
             state.isEmailVerified = action.payload.isEmailVerified
+            state.image = action.payload.image
             state.credits = action.payload.credits
             state.isSubscribed = action.payload.isSubscribed
             state.plan = action.payload.plan
@@ -50,6 +52,7 @@ export const counterSlice = createSlice({
             state.name = ""
             state.email = ""
             state.isEmailVerified = false
+            image: ""
             state.credits = 0
             state.isSubscribed = false
             state.plan = ""
