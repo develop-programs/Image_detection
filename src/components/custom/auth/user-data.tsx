@@ -5,7 +5,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 
 export default function UserData() {
-    const user = useSelector((state: any) => state.User);
+    const user = useSelector((state: user) => state.User);
     return (
         <Tabs className='flex h-full' defaultValue='profile'>
             <div className='flex flex-col w-56 gap-4 border-r-2 px-2'>

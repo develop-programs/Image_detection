@@ -23,12 +23,7 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 import React from "react"
-import Link from "next/link"
 import { signIn } from "next-auth/react"
-
-async function verifyEmail(email: string) {
-    throw new Error("Function not implemented yet")
-}
 
 const formSchema = z.object({
     name: z.string().min(3, {
@@ -63,9 +58,9 @@ export default function SignupForm() {
             name: values.name,
             email: values.email,
             password: values.password.password,
-        }).then((res) => {
+        }).then(() => {
             toast.success("Account created successfully")
-        }).catch((err) => {
+        }).catch(() => {
             toast.error("An error occurred while creating your account")
         })
     }

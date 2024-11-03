@@ -11,7 +11,7 @@ export const components: { title: string; href: string; description: string }[] 
   },
   {
     title: "Ai image generator",
-    href: "/components/image-generator",
+    href: "/ImageGenerator",
     description: "Generate an image using latest AI models"
   },
   {

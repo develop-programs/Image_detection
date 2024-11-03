@@ -3,9 +3,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Label } from "./label";
-import { Input } from "./input";
-import { set } from "mongoose";
 
 export function PlaceholdersAndVanishInput({
   placeholders,
@@ -24,26 +21,20 @@ export function PlaceholdersAndVanishInput({
       setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
     }, 3000);
   };
-  const handleVisibilityChange = () => {
-    if (document.visibilityState !== "visible" && intervalRef.current) {
-      clearInterval(intervalRef.current); // Clear the interval when the tab is not visible
-      intervalRef.current = null;
-    } else if (document.visibilityState === "visible") {
-      startAnimation(); // Restart the interval when the tab becomes visible
-    }
+  const handleVisibilityChange = (event: Event) => {
+    // Your code here
   };
 
   useEffect(() => {
-    startAnimation();
     document.addEventListener("visibilitychange", handleVisibilityChange);
-
+    startAnimation();
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [placeholders]);
+  }, [handleVisibilityChange, startAnimation]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const newDataRef = useRef<any[]>([]);
@@ -73,9 +64,9 @@ export function PlaceholdersAndVanishInput({
     const newData: any[] = [];
 
     for (let t = 0; t < 800; t++) {
-      let i = 4 * t * 800;
+      const i = 4 * t * 800;
       for (let n = 0; n < 800; n++) {
-        let e = i + 4 * n;
+        const e = i + 4 * n;
         if (
           pixelData[e] !== 0 &&
           pixelData[e + 1] !== 0 &&
@@ -161,7 +152,6 @@ export function PlaceholdersAndVanishInput({
   const vanishAndSubmit = () => {
     setAnimating(true);
     draw();
-
     const value = inputRef.current?.value || "";
     if (value && inputRef.current) {
       const maxX = newDataRef.current.reduce(
@@ -175,7 +165,8 @@ export function PlaceholdersAndVanishInput({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     vanishAndSubmit();
-    onSubmit && onSubmit(e);
+    onSubmit(e);
+    // Your code here
   };
   return (
     <form

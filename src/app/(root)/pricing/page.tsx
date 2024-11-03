@@ -1,7 +1,5 @@
 
 import React from 'react'
-
-import Back from '@/components/custom/Back'
 import PricingCards from '@/components/custom/PricingCards'
 import TopUp from '@/components/custom/TopUp'
 

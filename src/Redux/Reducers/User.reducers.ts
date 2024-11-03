@@ -52,7 +52,7 @@ export const counterSlice = createSlice({
             state.name = ""
             state.email = ""
             state.isEmailVerified = false
-            image: ""
+            state.image = ""
             state.credits = 0
             state.isSubscribed = false
             state.plan = ""
