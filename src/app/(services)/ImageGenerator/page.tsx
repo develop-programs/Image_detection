@@ -16,33 +16,26 @@ export default function page() {
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setInput(event.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    setInput(e.target.value);
   };
 
   const onSubmit = (e: any) => {
     e.preventDefault();
     console.log(e);
-    setInput(e.target.value);
-
   };
   return (
     <div>
-      <div className="h-[40rem] flex flex-col justify-center items-center px-4">
-        <h2 className="mb-10 sm:mb-20 text-xl text-center sm:text-5xl dark:text-white text-black">
-          Generate anything you want
-        </h2>
-        <PlaceholdersAndVanishInput
-          placeholders={placeholders}
-          onChange={handleChange}
-          onSubmit={onSubmit}
-        />
+      <div className="relative h-[40rem] inset-0 grid place-content-center px-4">
+        <div className="z-50">
+          <h2 className="mb-10 sm:mb-20 text-xl text-center sm:text-5xl text-white font-semibold">
+            Generate anything you want
+          </h2>
+          <PlaceholdersAndVanishInput
+            placeholders={placeholders}
+            onChange={handleChange}
+            onSubmit={onSubmit}
+          />
+        </div>
       </div>
       {input && <Image src={input} width={500} height={500} alt="Uploaded Image" />}
     </div>

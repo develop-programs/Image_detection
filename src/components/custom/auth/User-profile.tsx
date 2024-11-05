@@ -31,7 +31,7 @@ export default async function UserProfile() {
                     :
                     <Popover>
                         <PopoverTrigger asChild>
-                            <Button variant="ghost" className="p-0" size="icon">
+                            <Button variant="ghost" className="p-0 hover:bg-transparent" size="icon">
                                 <Avatar className="size-8">
                                     <AvatarImage src={session.user.image} alt={session.user.name} />
                                     <AvatarFallback>{session.user.name}</AvatarFallback>

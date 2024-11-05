@@ -23,10 +23,10 @@ export default function NavigationTabs() {
                     <NavigationMenuItem>
                         <NavigationMenuTrigger>Services</NavigationMenuTrigger>
                         <NavigationMenuContent>
-                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                {components.map((component) => (
+                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                                {components.map((component, key) => (
                                     <ListItem
-                                        key={component.title}
+                                        key={key}
                                         title={component.title}
                                         href={component.href as string}
                                     >

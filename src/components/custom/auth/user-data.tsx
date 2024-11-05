@@ -8,7 +8,7 @@ export default function UserData() {
     const user = useSelector((state: user) => state.User);
     return (
         <Tabs className='flex h-full' defaultValue='profile'>
-            <div className='flex flex-col w-56 gap-4 border-r-2 px-2'>
+            <div className='flex flex-col w-72 gap-4 border-r-2 px-2'>
                 <div className='grid gap-2'>
                     <span className='text-2xl font-semibold'>Account</span>
                     <p>Manage your account Info</p>
@@ -44,7 +44,7 @@ export default function UserData() {
                 <div></div>
                 <div></div>
             </TabsContent>
-            <TabsContent value='manage'>
+            <TabsContent value='manage' className='w-full'>
                 Manage
             </TabsContent>
         </Tabs>
