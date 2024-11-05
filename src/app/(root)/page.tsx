@@ -4,7 +4,6 @@ import { PlaceholdersAndVanishInput } from "@/components/ui/placehlder-vanishing
 import React from 'react'
 
 export default function page() {
-  const [input, setInput] = React.useState<string>("");
 
   const placeholders = [
     "Describe a futuristic cityscape at sunset",
@@ -15,7 +14,6 @@ export default function page() {
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
   };
 
   const onSubmit = (e: any) => {

@@ -1,10 +1,9 @@
 "use client";
-
 import { PlaceholdersAndVanishInput } from "@/components/ui/placehlder-vanishing";
 import Image from "next/image";
 import React from "react";
 
-export default function page() {
+export default function Page() {
   const [input, setInput] = React.useState<string>("");
 
   const placeholders = [
@@ -19,10 +18,11 @@ export default function page() {
     setInput(e.target.value);
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(e);
   };
+
   return (
     <div>
       <div className="relative h-[40rem] inset-0 grid place-content-center px-4">
