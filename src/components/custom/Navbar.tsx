@@ -6,11 +6,11 @@ import Image from 'next/image';
 
 export default function Navbar() {
     return (
-        <div className='flex justify-between p-4 text-slate-200'>
+        <div className='flex justify-between p-4'>
             <div className='flex items-center gap-12 z-50'>
                 <Link href="/" className='flex items-center gap-3'>
-                    <Image src='/icon.svg' width={100} height={100} className='size-6' alt='Photocess Logo' />
-                    <span className='text-xl text-slate-200 z-auto'>
+                    <Image src='/icon.svg' width={100} height={100} className='size-8' alt='Photocess Logo' />
+                    <span className='text-xl font-black z-auto'>
                         Photocess
                     </span>
                 </Link>

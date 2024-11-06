@@ -5,15 +5,8 @@ export default function Userlayout(
     { children }: { children: React.ReactNode }
 ) {
     return (
-        <main style={{
-            position: "relative",
-            backgroundImage: "url('./Designer.jpeg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-        }}>
-            <div className="absolute inset-0 w-full h-full bg-black bg-opacity-40 backdrop-blur-[1px]" />
-            <div className="absolute inset-0 w-full z-50">
+        <main>
+            <div className="absolute inset-0 w-full z-30 h-24">
                 <div className="block lg:hidden">
                     <MobileNav />
                 </div>
