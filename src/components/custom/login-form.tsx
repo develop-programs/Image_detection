@@ -42,7 +42,7 @@ export default function LoginForm() {
         await signIn("credentials", {
             email: values.email,
             password: values.password,
-            callbackUrl: `${window.location.origin}`,
+            callbackUrl: `${window.location.origin ? window.location.origin : "http://localhost:3000"}`,
             redirect: true,
         }).then((response) => {
             if (response && response.error) {

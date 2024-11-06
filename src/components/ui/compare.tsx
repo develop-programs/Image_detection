@@ -215,6 +215,9 @@ export const Compare = ({
                                     firstImageClassName
                                 )}
                                 draggable={false}
+                                width={400}
+                                height={400}
+                                priority
                             />
                         </motion.div>
                     ) : null}

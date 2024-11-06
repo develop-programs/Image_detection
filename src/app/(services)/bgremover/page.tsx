@@ -15,11 +15,11 @@ export default function page() {
                     slideMode="hover"
                 />
                 <div className=" h-full grid place-content-center">
-                    <label htmlFor="bgremove">
-                        <Button variant="default" size="default" className="p-6 text-xl">
+                    <Button variant="default" size="default" className="p-6 text-xl" asChild>
+                        <label htmlFor="bgremove">
                             Upload Image
-                        </Button>
-                    </label>
+                        </label>
+                    </Button>
                     <input type="file" id="bgremove" hidden />
                     <span>Or drag a file</span>
                 </div>
