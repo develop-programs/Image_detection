@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function page() {
     return (
-        <div className="h-screen bg-slate-500 grid place-content-center">
+        <div className="h-screen grid place-content-center">
             <div className="flex gap-80">
                 <Compare
                     firstImage="https://assets.aceternity.com/code-problem.png"
