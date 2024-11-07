@@ -1,7 +1,6 @@
 "use client";
 import { Button } from '@/components/ui/button'
-import { PlaceholdersAndVanishInput } from "@/components/ui/placehlder-vanishing";
-import { Icon } from '@radix-ui/react-select';
+import { PlaceholdersAndVanishInput } from "@/components/ui/placehlder-vanishing"
 import React from 'react'
 
 export default function page() {
