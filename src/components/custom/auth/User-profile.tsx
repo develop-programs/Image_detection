@@ -20,7 +20,7 @@ export default async function UserProfile() {
                 !session ?
                     <div className='flex gap-3 items-center'>
                         <Link href="/api/auth/signUp" className='text-sm' passHref legacyBehavior>
-                            <Button variant="link" size="lg" className='p-0 h-auto'>
+                            <Button variant="link" size="lg" className='p-0 h-auto text-slate-800'>
                                 SignUp
                             </Button>
                         </Link>/

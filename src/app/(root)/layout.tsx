@@ -6,7 +6,7 @@ export default function Userlayout(
 ) {
     return (
         <main>
-            <div className="absolute inset-0 w-full z-30 h-24">
+            <div className="absolute inset-0 w-full z-50 h-24">
                 <div className="block lg:hidden">
                     <MobileNav />
                 </div>

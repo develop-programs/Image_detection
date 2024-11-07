@@ -29,11 +29,11 @@ export default function page() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}>
-      <div className='absolute w-full h-full bg-black bg-opacity-40 backdrop-blur-sm' />
+      <div className='absolute w-full h-full bg-black bg-opacity-10 backdrop-blur-[1px]' />
       <div className="h-full inset-0 grid place-content-center px-4">
         <div className="z-50 space-y-6">
-          <h2 className="text-xl text-center sm:text-5xl text-white font-semibold">
-            Generate anything you want
+          <h2 className="text-xl text-center sm:text-5xl font-semibold z-10">
+            Know everything about your image
           </h2>
           <PlaceholdersAndVanishInput
             placeholders={placeholders}

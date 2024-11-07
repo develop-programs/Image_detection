@@ -31,10 +31,10 @@ export default function Page() {
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
     }}>
-      <div className="absolute inset-0 w-full h-full bg-black bg-opacity-40 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 w-full h-full bg-black bg-opacity-10 backdrop-blur-[1px]" />
       <div className="relative h-full inset-0 grid place-content-center px-4">
         <div className="z-50">
-          <h2 className="mb-10 sm:mb-20 text-xl text-center sm:text-5xl text-white font-semibold">
+          <h2 className="mb-10 sm:mb-20 text-xl text-center sm:text-5xl font-semibold">
             Generate anything you want
           </h2>
           <PlaceholdersAndVanishInput
