@@ -12,22 +12,17 @@ declare module "next-auth" {
       email: string;
       image?: string;
       isEmailVerified: boolean;
-      credits: number;
-      isSubscribed: boolean;
-      plan: string;
       createdAt: Date;
       updatedAt: Date;
     } & DefaultSession["user"];
   }
+
   interface User {
     id: string;
     name: string;
     email: string;
     image?: string;
     isEmailVerified: boolean;
-    credits: number;
-    isSubscribed: boolean;
-    plan: string;
     createdAt: Date;
     updatedAt: Date;
   }
@@ -41,9 +36,6 @@ declare module "next-auth/jwt" {
     email: string;
     image?: string;
     isEmailVerified: boolean;
-    credits: number;
-    isSubscribed: boolean;
-    plan: string;
     createdAt: Date;
     updatedAt: Date;
   }

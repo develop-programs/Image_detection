@@ -10,7 +10,6 @@ interface UserData {
     image: string;
     isEmailVerified: boolean;
     credits: number;
-    isSubscribed: boolean;
     plan: string;
     createdAt: Date;
     updatedAt: Date;
@@ -24,7 +23,6 @@ const initialState: UserData = {
     isEmailVerified: false,
     image: "",
     credits: 0,
-    isSubscribed: false,
     plan: "",
     createdAt: new Date(),
     updatedAt: new Date()
@@ -42,7 +40,6 @@ export const counterSlice = createSlice({
             state.isEmailVerified = action.payload.isEmailVerified
             state.image = action.payload.image
             state.credits = action.payload.credits
-            state.isSubscribed = action.payload.isSubscribed
             state.plan = action.payload.plan
             state.createdAt = action.payload.createdAt
             state.updatedAt = action.payload.updatedAt
@@ -54,7 +51,6 @@ export const counterSlice = createSlice({
             state.isEmailVerified = false
             state.image = ""
             state.credits = 0
-            state.isSubscribed = false
             state.plan = ""
             state.createdAt = new Date()
             state.updatedAt = new Date()

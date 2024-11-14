@@ -13,21 +13,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  email           String   @unique @db.String
-  name            String?  @db.String
-  password        String   @db.String
-  image           String?  @db.String
-  isEmailVerified Boolean  @default(false) @db.Bool
-  isSubscribed    Boolean  @default(false) @db.Bool
-  credits         Int      @default(200) @db.Int
-  plan            plan     @default(FREE)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+model User {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  email           String         @unique @db.String
+  name            String?        @db.String
+  password        String         @db.String
+  image           String?        @db.String
+  isEmailVerified Boolean        @default(false) @db.Bool
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  subscriptions   Subscription[] @relation("UserSubscriptions")
 }
 
-model blog {
+model Subscription {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User     @relation("UserSubscriptions", fields: [userId], references: [id])
+  userId    String   @db.ObjectId
+  plan      Plan     @default(FREE)
+  credit    Int      @default(400)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Blog {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String   @db.String
   content   String   @db.String
@@ -35,9 +43,8 @@ model blog {
   updatedAt DateTime @updatedAt
 }
 
-enum plan {
+enum Plan {
   FREE
   BASIC
   PREMIUM
-  ENTERPRISE
 }

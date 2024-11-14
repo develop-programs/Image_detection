@@ -10,7 +10,7 @@ export default function Navbar() {
             <div className='flex items-center gap-12 z-50'>
                 <Link href="/" className='flex items-center gap-3'>
                     <Image src='/icon.svg' width={100} height={100} className='size-8' alt='Photocess Logo' />
-                    <span className='text-xl font-black z-auto'>
+                    <span className='text-xl text-slate-800 font-black z-auto'>
                         Photocess
                     </span>
                 </Link>

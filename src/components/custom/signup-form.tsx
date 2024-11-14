@@ -54,13 +54,14 @@ export default function SignupForm() {
     })
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await axios.post(`${process.env.NEXTAUTH_URL}/api/auth`, {
+        await axios.post(`${window.location.origin}/api/auth`, {
             name: values.name,
             email: values.email,
             password: values.password.password,
         }).then(() => {
             toast.success("Account created successfully")
-        }).catch(() => {
+        }).catch((error) => {
+            console.log(error);
             toast.error("An error occurred while creating your account")
         })
     }

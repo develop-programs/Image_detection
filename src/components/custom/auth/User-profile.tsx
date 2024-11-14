@@ -13,17 +13,12 @@ import UserData from './user-data';
 
 
 export default async function UserProfile() {
-    const session = await getServerSession(options)
+    const session = await getServerSession(options);
     return (
         <div>
             {
                 !session ?
                     <div className='flex gap-3 items-center'>
-                        <Link href="/api/auth/signUp" className='text-sm' passHref legacyBehavior>
-                            <Button variant="link" size="lg" className='p-0 h-auto text-slate-800'>
-                                SignUp
-                            </Button>
-                        </Link>/
                         <SignInButton>
                             Login
                         </SignInButton>

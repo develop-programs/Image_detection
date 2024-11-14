@@ -1,6 +1,7 @@
 import React from "react";
 import { Compare } from "@/components/ui/compare";
 import { Button } from "@/components/ui/button";
+import SampleImage from "./(components)/SampleImage";
 
 export default function page() {
     return (
@@ -28,6 +29,7 @@ export default function page() {
             </div>
             <div className="text-center">
                 <span className="text-5xl font-black text-slate-700">Superb Quality</span>
+                <SampleImage />
             </div>
         </div>
     );
